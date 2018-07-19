@@ -1,24 +1,32 @@
-# Project Name
+# Cognitive Services QnA Maker Samples in Node.js
 
-(short, 1-3 sentenced, description of the project)
+These samples show you how to programmatically create, update, publish, and replace a QnA Maker knowledge base, amongst many other ways to interact with it. All samples are in Node.js. To view these same samples in other languages:
+
+[cognitive-services-qnamaker-csharp](https://github.com/Azure-Samples/cognitive-services-qnamaker-csharp)
+
+[cognitive-services-qnamaker-java](https://github.com/Azure-Samples/cognitive-services-qnamaker-java)
+
+[cognitive-services-qnamaker-python](https://github.com/Azure-Samples/cognitive-services-qnamaker-python)
 
 ## Features
 
-This project framework provides the following features:
+Included are the following samples:
 
-* Feature 1
-* Feature 2
-* ...
+* [Create knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/create-new-knowledge-base.js). Create a brand new knowledge base with given FAQ URLs. You may supply your own.
+* [Update knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/update-knowledge-base.js). Update an existing knowledge base by changing its name.
+* [Publish knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/publish-knowledge-base.js). Publish any existing knowledge base to the host your Azure account.
+* [Replace knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/replace-knowledge-base.js). Replace an entire existing knowledge base with a custom question/answer pair.
+* [Download knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/download-knowledge-base.js). Download the contents of your existing knowledge base in JSON.
 
 ## Getting Started
 
 ### Prerequisites
 
-(ideally very short, if any)
+For each sample, a subscription key is required from your Azure Portal account. 
+* To create a new account/resource for QnA Maker, see [Create a Cognitive Services API account in the Azure portal](https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account). You may need to 'Search in Marketplace' for QnA Maker if you don't see it in the list given.  
+* For existing accounts, the key can be found in your [Azure Portal](https://ms.portal.azure.com/) dashboard in your QnA Maker resource under Resource Management > Keys. 
 
-- OS
-- Library version
-- ...
+With the exception of creating a new knowledge base, these samples will require your [QnA Maker account](https://www.qnamaker.ai/Home/MyServices) knowledge base ID. 
 
 ### Installation
 
@@ -34,6 +42,11 @@ This project framework provides the following features:
 1. git clone [repository clone url]
 2. cd [respository name]
 3. ...
+
+* Quickstart: [Create a new knowledge base in Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/create-new-kb-nodejs)
+* Quickstart: [Update a knowledge base in Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/update-kb-nodejs)
+* Quickstart: [Publish a knowledge base in Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/publish-kb-nodejs)
+* More coming soon... in the meantime, refer to [Quickstart for Microsoft QnA Maker API with Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/nodejs) for all quickstarts in minimal format.
 
 
 ## Demo
