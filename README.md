@@ -18,6 +18,10 @@ Included are the following samples:
 * [Replace knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/replace-knowledge-base.js). Replace an entire existing knowledge base with a custom question/answer pair.
 * [Download knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/download-knowledge-base.js). Download the contents of your existing knowledge base in JSON.
 
+All samples revolve around what you can do with a knowledge base, which is made up of FAQs or product manuals where there is a question and an answer. QnA Maker gives you more control over how to answer questions by allowing you to train a chat bot to give answers in a variety of ways that feels more like natural, conversational exchanges.
+
+<img src="https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/media/botFrameworkArch.png" width="700
+
 ## Getting Started
 
 ### Prerequisites
@@ -30,41 +34,12 @@ With the exception of creating a new knowledge base, these samples will require 
 
 ### Installation
 
-(ideally very short)
-
-- npm install [package name]
-- mvn install
-- ...
+***More coming soon***
 
 ### Quickstart
-(Add steps to get up and running quickly)
-
-1. git clone [repository clone url]
-2. cd [respository name]
-3. ...
 
 * Quickstart: [Create a new knowledge base in Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/create-new-kb-nodejs)
 * Quickstart: [Update a knowledge base in Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/update-kb-nodejs)
 * Quickstart: [Publish a knowledge base in Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/publish-kb-nodejs)
-* More coming soon... in the meantime, refer to [Quickstart for Microsoft QnA Maker API with Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/nodejs) for all quickstarts in minimal format.
+* More quickstarts coming soon... in the meantime, refer to [Quickstart for Microsoft QnA Maker API with Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/nodejs) for all quickstarts in minimal format.
 
-
-## Demo
-
-A demo app is included to show how to use the project.
-
-To run the demo, follow these steps:
-
-(Add steps to start up the demo)
-
-1.
-2.
-3.
-
-## Resources
-
-(Any additional resources or related projects)
-
-- Link to supporting information
-- Link to similar sample
-- ...
