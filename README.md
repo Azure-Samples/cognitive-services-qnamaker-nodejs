@@ -17,6 +17,7 @@ Included are the following samples:
 * [Publish knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/publish-knowledge-base.js). Publish any existing knowledge base to the host your Azure account.
 * [Replace knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/replace-knowledge-base.js). Replace an entire existing knowledge base with a custom question/answer pair.
 * [Download knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/download-knowledge-base.js). Download the contents of your existing knowledge base in JSON.
+* [Delete knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-nodejs/blob/master/delete-knowledge-base.js). Delete an existing knowledge base that was previously published.
 
 All REST samples revolve around what you can do with a knowledge base, which is made up of FAQs or product manuals where there is a question and an answer. QnA Maker gives you more control over how to answer questions by allowing you to train a chat bot to give answers in a variety of ways that feels more like natural, conversational exchanges.
 
@@ -32,9 +33,17 @@ For each sample, a subscription key is required from your Azure Portal account.
 
 With the exception of creating a new knowledge base, these samples will require your [QnA Maker account](https://www.qnamaker.ai/Home/MyServices) knowledge base ID. 
 
-### Installation
+### Run the sample
 
-***More coming soon***
+1. Create a Node.js project in your favorite IDE or create one in Visual Studio 2017 by expanding Javascript in the new project popup and selecting Node.js, then Blank Node.js Console Application.
+
+1. Copy/paste the sample you want to test in the app.js file.
+
+1. Add your Azure subscription key for QnA Maker and add your knowledge base ID (if applicable) to the code at the top.
+
+1. Run the sample.
+
+1. Check your knowledge bases in [qnamaker.ai](https://www.qnamaker.ai/Home/MyServices) to see changes.
 
 ### Quickstart
 
