@@ -98,6 +98,16 @@ let post = function (path, content, callback) {
     req.end();
 };
 
+// Call 'callback' when we have the response from the /knowledgebases/create POST method.
+let create_kb = function (path, req, callback) {
+    console.log('Calling ' + host + path + '.');
+    // Send the POST request.
+    post(path, req, function (response) {
+        // Extract the data we want from the POST response and pass it to the callback function.
+        callback({ operation: response.headers.location, response: response.body });
+    });
+};
+
 // Call 'callback' when we have the entire response from the GET request.
 let get = function (path, callback) {
     let request_params = {
@@ -112,16 +122,6 @@ let get = function (path, callback) {
     // Pass the callback function to the response handler.
     let req = https.request(request_params, get_response_handler(callback));
     req.end();
-};
-
-// Call 'callback' when we have the response from the /knowledgebases/create POST method.
-let create_kb = function (path, req, callback) {
-    console.log('Calling ' + host + path + '.');
-    // Send the POST request.
-    post(path, req, function (response) {
-        // Extract the data we want from the POST response and pass it to the callback function.
-        callback({ operation: response.headers.location, response: response.body });
-    });
 };
 
 // Call 'callback' when we have the response from the GET request to check the status.
