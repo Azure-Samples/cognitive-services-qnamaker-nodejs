@@ -15,9 +15,9 @@ Included are the following samples:
 * [Create knowledge base](documentation-samples/quickstarts/create-knowledge-base/create-new-knowledge-base.js). Create a brand new knowledge base with given FAQ URLs. You may supply your own.
 * [Update knowledge base](documentation-samples/quickstarts/update-knowledge-base/update-knowledge-base.js). Update an existing knowledge base by changing its name.
 * [Publish knowledge base](documentation-samples/quickstarts/publish-knowledge-base/publish-knowledge-base.js). Publish any existing knowledge base to the host your Azure account.
-* [Replace knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/replace-knowledge-base.js). Replace an entire existing knowledge base with a custom question/answer pair.
-* [Download knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/download-knowledge-base.js). Download the contents of your existing knowledge base in JSON.
-* [Delete knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-nodejs/blob/master/delete-knowledge-base.js). Delete an existing knowledge base that was previously published.
+* [Replace knowledge base](replace-knowledge-base.js). Replace an entire existing knowledge base with a custom question/answer pair.
+* [Download knowledge base](download-knowledge-base.js). Download the contents of your existing knowledge base in JSON.
+* [Delete knowledge base](delete-knowledge-base.js). Delete an existing knowledge base that was previously published.
 
 All REST samples revolve around what you can do with a knowledge base, which is made up of FAQs or product manuals where there is a question and an answer. QnA Maker gives you more control over how to answer questions by allowing you to train a chat bot to give answers in a variety of ways that feels more like natural, conversational exchanges.
 
