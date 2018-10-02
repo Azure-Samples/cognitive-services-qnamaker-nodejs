@@ -100,6 +100,16 @@ let patch = function(path, content, callback) {
     req.end ();
 }
 
+// Calls 'callback' after we have the response from the /knowledgebases PATCH method.
+let update_kb = function(path, req, callback) {
+    console.log('Calling ' + host + path + '.');
+    // Send the PATCH request.
+    patch(path, req, function (response) {
+        // Extract the data we want from the PATCH response and pass it to the callback function.
+        callback({ operation : response.headers.location, response : response.body });
+    });
+}
+
 // Calls 'callback' after we have the entire GET request response.
 let get = function(path, callback) {
     let request_params = {
@@ -114,16 +124,6 @@ let get = function(path, callback) {
     // Pass the callback function to the response handler.
     let req = https.request(request_params, get_response_handler(callback));
     req.end ();
-}
-
-// Calls 'callback' after we have the response from the /knowledgebases PATCH method.
-let update_kb = function(path, req, callback) {
-    console.log('Calling ' + host + path + '.');
-    // Send the PATCH request.
-    patch(path, req, function (response) {
-        // Extract the data we want from the PATCH response and pass it to the callback function.
-        callback({ operation : response.headers.location, response : response.body });
-    });
 }
 
 // Calls 'callback' after we have the response from the GET request to check the status.
