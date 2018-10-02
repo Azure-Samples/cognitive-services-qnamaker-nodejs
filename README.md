@@ -12,9 +12,9 @@ These REST samples show you how to programmatically create, update, publish, and
 
 Included are the following samples:
 
-* [Create knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/create-new-knowledge-base.js). Create a brand new knowledge base with given FAQ URLs. You may supply your own.
-* [Update knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/update-knowledge-base.js). Update an existing knowledge base by changing its name.
-* [Publish knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/publish-knowledge-base.js). Publish any existing knowledge base to the host your Azure account.
+* [Create knowledge base](documentation-samples/quickstarts/create-knowledge-base/create-new-knowledge-base.js). Create a brand new knowledge base with given FAQ URLs. You may supply your own.
+* [Update knowledge base](documentation-samples/quickstarts/update-knowledge-base/update-knowledge-base.js). Update an existing knowledge base by changing its name.
+* [Publish knowledge base](documentation-samples/quickstarts/publish-knowledge-base/publish-knowledge-base.js). Publish any existing knowledge base to the host your Azure account.
 * [Replace knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/replace-knowledge-base.js). Replace an entire existing knowledge base with a custom question/answer pair.
 * [Download knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-python/blob/master/download-knowledge-base.js). Download the contents of your existing knowledge base in JSON.
 * [Delete knowledge base](https://github.com/Azure-Samples/cognitive-services-qnamaker-nodejs/blob/master/delete-knowledge-base.js). Delete an existing knowledge base that was previously published.
@@ -49,9 +49,9 @@ With the exception of creating a new knowledge base, these samples will require 
 
 ### Quickstart
 
-* Quickstart: [Create a new knowledge base in Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/create-new-kb-nodejs)
-* Quickstart: [Update a knowledge base in Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/update-kb-nodejs)
-* Quickstart: [Publish a knowledge base in Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/publish-kb-nodejs)
+* Quickstart: [Create a new knowledge base in Node.js](documentation-samples/quickstarts/create-knowledge-base/create-new-knowledge-base.js)
+* Quickstart: [Update a knowledge base in Node.js](documentation-samples/quickstarts/update-knowledge-base/update-knowledge-base.js)
+* Quickstart: [Publish a knowledge base in Node.js](documentation-samples/quickstarts/publish-knowledge-base/publish-knowledge-base.js)
 * More quickstarts coming soon... in the meantime, refer to [Quickstart for Microsoft QnA Maker API with Node.js](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/quickstarts/nodejs) for all quickstarts in minimal format.
 
 ## References
