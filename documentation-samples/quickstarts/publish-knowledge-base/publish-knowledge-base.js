@@ -1,6 +1,7 @@
 'use strict';
 
-const request = require('request-promise');
+let fs = require ('fs');
+let https = require ('https');
 
 // **********************************************
 // *** Update or verify the following values. ***
@@ -8,40 +9,89 @@ const request = require('request-promise');
 
 // Represents the various elements used to create HTTP request URIs
 // for QnA Maker operations.
-const knowledge_base_id = "YOUR-KNOWLEDGE-BASE-ID";
-const resource_key = "YOUR-RESOURCE-KEY";
+let host = 'westus.api.cognitive.microsoft.com';
+let service = '/qnamaker/v4.0';
+let method = '/knowledgebases/';
 
-const host = "https://westus.api.cognitive.microsoft.com/qnamaker/v4.0/knowledgebases/" + knowledge_base_id;
+// NOTE: Replace this with a valid subscription key.
+let subscriptionKey = '<qna-maker-subscription-key>';
 
-var publish = async () => {
+// NOTE: Replace this with a valid knowledge base ID.
+let kb = '<qna-maker-knowledge-base-id>';
 
-    try{
-        // Add an utterance
-        var options = {
-            uri: host,
-            method: 'POST',
-            headers: {
-                'Ocp-Apim-Subscription-Key': resource_key
-            },
-            resolveWithFullResponse: true
-        };
+// Build your path URL.
+let path = service + method + kb;
 
-        let response = await request(options);
+// Formats and indents JSON for display.
+let pretty_print = function (s) {
+    return JSON.stringify(JSON.parse(s), null, 4);
+}
 
-        return response;
-
-    } catch (err){
-        throw err;
-    }
+// Call 'callback' after we have the entire response.
+let response_handler = function (callback, response) {
+    let body = '';
+    response.on ('data', function (d) {
+        body += d;
+    });
+    response.on ('end', function () {
+        // Calls 'callback' with the status code, headers, and body of the response.
+        callback ({ status : response.statusCode, headers : response.headers, body : body });
+    });
+    response.on ('error', function (e) {
+        console.log ('Error: ' + e.message);
+    });
 };
 
-publish().then(response => {
+// Get an HTTP response handler that calls 'callback' when we have the entire response.
+let get_response_handler = function (callback) {
+    // Return a function that takes an HTTP response and is closed over the callback.
+    // Function signature is required by https.request, hence the need for the closure.
+    return function (response) {
+        response_handler (callback, response);
+    }
+}
 
-    // success: statusCode==204
-    console.log(response.statusCode);
+// Calls 'callback' when we have the entire response from the POST request.
+let post = function (path, content, callback) {
+    let request_params = {
+        method : 'POST',
+        hostname : host,
+        path : path,
+        headers : {
+            'Content-Type' : 'application/json',
+            'Content-Length' : content.length,
+            'Ocp-Apim-Subscription-Key' : subscriptionKey,
+        }
+    };
 
-}).catch((err)=> {
-        console.log(err.statusCode);
-        console.log(err.message);
-        console.log(err.error);
+    // Pass the callback function to the response handler.
+    let req = https.request (request_params, get_response_handler (callback));
+    req.write (content);
+    req.end ();
+}
+
+// Calls 'callback' when we have the response from the /knowledgebases POST method.
+let publish_kb = function (path, req, callback) {
+
+    console.log ('Calling ' + host + path + '.');
+
+    // Send the POST request.
+    post (path, req, function (response) {
+
+        // Extract data from the POST response and pass to 'callback'.
+        if (response.status == '204') {
+
+            let result = {'result':'Success'};
+            callback (JSON.stringify(result));
+        }
+        else {
+            callback (response.body);
+        }
+    });
+}
+
+
+// Sends the request to publish the knowledge base.
+publish_kb (path, '', function (result) {
+    console.log (pretty_print(result));
 });
