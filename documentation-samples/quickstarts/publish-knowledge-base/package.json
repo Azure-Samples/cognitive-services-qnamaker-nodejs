@@ -4,9 +4,13 @@
   "description": "",
   "main": "publish-knowledge-base.js",
   "scripts": {
-    "start":"node publish-knowledge-base.js",
+    "start": "node publish-knowledge-base.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
 }
