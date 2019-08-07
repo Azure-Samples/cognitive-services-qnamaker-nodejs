@@ -1,4 +1,5 @@
 "use strict";
+require('dotenv').config();
 
 /* This sample does the following tasks.
  * - Create a knowledge base.
@@ -11,26 +12,30 @@
  * npm install @azure/cognitiveservices-qnamaker
  */
 exports.__esModule = true;
+
+// <dependencies>
 var msRest = require("@azure/ms-rest-js");
 var qnamaker = require("@azure/cognitiveservices-qnamaker");
+// </dependencies>
+
 
 // Get environment values.
-
+// <resourcekeys>
 var key_var = 'QNAMAKER_SUBSCRIPTION_KEY';
 if (!process.env[key_var]) {
     throw new Error('please set/export the following environment variable: ' + key_var);
 }
 var subscription_key = process.env[key_var];
 
-var region_var = 'QNAMAKER_REGION';
-if (!process.env[region_var]) {
-    throw new Error('please set/export the following environment variable: ' + region_var);
+var host_var = 'QNAMAKER_HOST';
+if (!process.env[host_var]) {
+    throw new Error('please set/export the following environment variable: ' + host_var);
 }
-var region = process.env[region_var];
-var endpoint = 'https://' + region + '.api.cognitive.microsoft.com/';
+var host = process.env[host_var];
+var endpoint = host;
+// </resourcekeys>
 
 // Create client.
-
 /*
  * The QnAMakerClient constructor expects a parameter 'credentials' of type
  * msRest.ServiceClientCredentials.
@@ -48,9 +53,14 @@ var endpoint = 'https://' + region + '.api.cognitive.microsoft.com/';
  * ApiKeyCredentials
  * https://github.com/Azure/ms-rest-js/blob/master/lib/credentials/apiKeyCredentials.ts#L26
  */
+
+ // <authorization>
 var creds = new msRest.ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': subscription_key } });
 var client = new qnamaker.QnAMakerClient(creds, endpoint);
+
 var kb = new qnamaker.Knowledgebase(client);
+// </authorization>
+
 
 // Helper functions.
 
@@ -66,6 +76,7 @@ var kb = new qnamaker.Knowledgebase(client);
  * KnowledgebaseDTO
  * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L704
  */
+// <listkbs>
 function list_kbs() {
     kb.listAll().then(function (result) {
         console.log("Existing knowledge bases:\n");
@@ -77,6 +88,8 @@ function list_kbs() {
         throw error;
     });
 }
+// </listkbs>
+
 
 /*
  * See:
@@ -85,6 +98,7 @@ function list_kbs() {
  * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/operations/knowledgebase.ts#L81
  */
 // Delete the specified KB. You can use this method to delete excess KBs created with this quickstart.
+// <deletekbs>
 function delete_kb(kb_id) {
     kb.deleteMethod(kb_id).then(function () {
         console.log("KB " + kb_id + " deleted.");
@@ -92,6 +106,7 @@ function delete_kb(kb_id) {
         throw error;
     });
 }
+// </deletekbs>
 
 /*
  * See:
@@ -107,6 +122,7 @@ function delete_kb(kb_id) {
  * OperationsGetDetailsResponse
  * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L798
  */
+// <monitorOperation>
 function wait_for_operation(operation_id) {
     return client.operations.getDetails(operation_id).then(function (result) {
         var state = result._response.parsedBody.operationState;
@@ -129,21 +145,26 @@ function wait_for_operation(operation_id) {
         throw error;
     });
 }
+// </monitorOperation>
+
 
 // Main functions.
 
+
+/*
+    * See:
+    * CreateKbDTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L473
+    * QnADTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L363
+    * MetadataDTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L331
+    * FileDTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L423
+    */
+// <createkb>
 function create_kb() {
-    /*
-     * See:
-     * CreateKbDTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L473
-     * QnADTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L363
-     * MetadataDTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L331
-     * FileDTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L423
-     */
+
     var answer = "You can use our REST APIs to manage your Knowledge Base. See here for details: https://westus.dev.cognitive.microsoft.com/docs/services/58994a073d9e04097c7ba6fe/operations/58994a073d9e041ad42d9baa";
     var source = "Custom Editorial";
     var questions = ["How do I programmatically update my Knowledge Base?"];
@@ -163,32 +184,35 @@ function create_kb() {
         throw error;
     });
 }
+// </createkb>
 
+/*
+    * See:
+    *
+    * UpdateKbOperationDTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L107
+    * UpdateKbOperationDTOAdd (simply extends CreateKbInputDTO)
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L35
+    * CreateKbInputDTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L14
+    * UpdateKbOperationDTODelete (simply extends DeleteKbContentsDTO)
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L64
+    * DeleteKbContentsDTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L46
+    * UpdateKbOperationDTOUpdate (simply extends UpdateKbContentsDTO)
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L97
+    * UpdateKbContentsDTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L74
+    * QnADTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L363
+    * MetadataDTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L331
+    * FileDTO
+    * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L423
+    */
+// <updatekb>
 function update_kb(kb_id) {
-    /*
-     * See:
-     *
-     * UpdateKbOperationDTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L107
-     * UpdateKbOperationDTOAdd (simply extends CreateKbInputDTO)
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L35
-     * CreateKbInputDTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L14
-     * UpdateKbOperationDTODelete (simply extends DeleteKbContentsDTO)
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L64
-     * DeleteKbContentsDTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L46
-     * UpdateKbOperationDTOUpdate (simply extends UpdateKbContentsDTO)
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L97
-     * UpdateKbContentsDTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/index.ts#L74
-     * QnADTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L363
-     * MetadataDTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L331
-     * FileDTO
-     * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/models/mappers.ts#L423
-     */
+
     // Add new Q&A lists, URLs, and files to the KB.
     var answer = "You can change the default message if you use the QnAMakerDialog. See this for details: https://docs.botframework.com/en-us/azure-bot-service/templates/qnamaker/#navtitle";
     var source = "Custom Editorial";
@@ -212,12 +236,14 @@ function update_kb(kb_id) {
         throw error;
     });
 }
+// </updatekb>
 
 /*
  * See:
  * publish
  * https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/cognitiveservices/cognitiveservices-qnamaker/src/operations/knowledgebase.ts#L109
  */
+// <publishkb>
 function publish_kb(kb_id) {
     kb.publish(kb_id).then(function (result) {
         console.log("KB " + kb_id + " published.");
@@ -225,6 +251,9 @@ function publish_kb(kb_id) {
         throw error;
     });
 }
+// </publishkb>
+
+// 
 
 async function quickstart() {
     console.log("Creating KB...");
