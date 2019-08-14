@@ -113,7 +113,6 @@ const deleteKb = async (kbId) => {
             resolveWithFullResponse: true
         };
 
-        // Pass the callback function to the response handler.
         return await request(request_params);
         
     } catch (err){
@@ -195,7 +194,7 @@ const replaceKb = async (kbId) => {
 var publishKb = async (kbId) => {
 
     try{
-        // Add an utterance
+
         var options = {
             uri: resourceAuthoringEndpoint + "/knowledgebases/" + kbId,
             method: 'POST',
@@ -221,7 +220,6 @@ const getOperationStatus = async (result) => {
         let response;
         let state = result.operationState;
 
-        // wait until knowledge base is created
         while( state==="Running" || state==="NotStarted"){
 
             const options = {
