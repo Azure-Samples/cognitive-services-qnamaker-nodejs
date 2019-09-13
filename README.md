@@ -1,3 +1,13 @@
+---
+page_type: sample
+languages:
+- javascript
+products:
+- azure
+description: "These REST samples show you how to programmatically create,"
+urlFragment: cognitive-services-qnamaker-nodejs
+---
+
 # Cognitive Services QnA Maker Samples in Node.js
 
 These REST samples show you how to programmatically create, update, publish, and replace a QnA Maker knowledge base, amongst many other ways to interact with it. All samples are in Node.js. To view these same samples in other languages:
