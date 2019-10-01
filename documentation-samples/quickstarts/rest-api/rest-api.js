@@ -26,7 +26,7 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 //<authorization>
 const resourceKey = process.env.QNAMAKER_RESOURCE_KEY;
 
-// "https://{region}.api.cognitive.microsoft.com/qnamaker/v4.0"
+// "https://{your-resource-name}.api.cognitive.microsoft.com/qnamaker/v4.0"
 const resourceAuthoringEndpoint = process.env.QNAMAKER_AUTHORING_ENDPOINT;
 // </authorization>
 
