@@ -5,34 +5,42 @@ require('dotenv').config();
  * - Create a knowledge base.
  * - Update a knowledge base.
  * - Publish a knowledge base.
+ * - Query a knowledge base.
+ * - Delete a knowledge base.
  */
 
 /* To run this sample, install the following modules.
  * npm install @azure/ms-rest-js
  * npm install @azure/cognitiveservices-qnamaker
+ * npm install @azure/cognitiveservices-qnamaker-runtime
  */
 exports.__esModule = true;
 
 // <dependencies>
 var msRest = require("@azure/ms-rest-js");
 var qnamaker = require("@azure/cognitiveservices-qnamaker");
+var qnamaker_runtime = require("@azure/cognitiveservices-qnamaker-runtime");
 // </dependencies>
-
 
 // Get environment values.
 // <resourcekeys>
-var key_var = 'QNAMAKER_SUBSCRIPTION_KEY';
+var key_var = 'QNA_MAKER_SUBSCRIPTION_KEY';
 if (!process.env[key_var]) {
     throw new Error('please set/export the following environment variable: ' + key_var);
 }
 var subscription_key = process.env[key_var];
 
-var host_var = 'QNAMAKER_HOST';
-if (!process.env[host_var]) {
-    throw new Error('please set/export the following environment variable: ' + host_var);
+var endpoint_var = 'QNA_MAKER_ENDPOINT';
+if (!process.env[endpoint_var]) {
+    throw new Error('please set/export the following environment variable: ' + endpoint_var);
 }
-var host = process.env[host_var];
-var endpoint = host;
+var endpoint = process.env[endpoint_var];
+
+var runtime_endpoint_var = 'QNA_MAKER_RUNTIME_ENDPOINT';
+if (!process.env[runtime_endpoint_var]) {
+    throw new Error('please set/export the following environment variable: ' + runtime_endpoint_var);
+}
+var runtime_endpoint = process.env[runtime_endpoint_var];
 // </resourcekeys>
 
 // Create client.
@@ -57,10 +65,8 @@ var endpoint = host;
  // <authorization>
 var creds = new msRest.ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': subscription_key } });
 var client = new qnamaker.QnAMakerClient(creds, endpoint);
-
 var kb = new qnamaker.Knowledgebase(client);
 // </authorization>
-
 
 // Helper functions.
 
@@ -107,6 +113,17 @@ function delete_kb(kb_id) {
     });
 }
 // </deletekbs>
+
+// <getEndpointKey>
+function get_runtime_endpoint_key(client) {
+	var endpoint_key_client = new qnamaker.EndpointKeys(client);
+	return endpoint_key_client.getKeys().then(function (result) {
+		return result.primaryEndpointKey;
+    })["catch"](function (error) {
+        throw error;
+    });
+}
+// </getEndpointKey>
 
 /*
  * See:
@@ -229,9 +246,9 @@ function update_kb(kb_id) {
     // Bundle the add, update, and delete requests.
     var update_kb_payload = { add: update_kb_add_payload, update: update_kb_update_payload, deleteProperty: update_kb_delete_payload };
 
-    kb.update(kb_id, update_kb_payload).then(function (result) {
+    return kb.update(kb_id, update_kb_payload).then(function (result) {
         console.log("Waiting for KB update operation to finish...");
-        wait_for_operation(result._response.parsedBody.operationId);
+        return wait_for_operation(result._response.parsedBody.operationId);
     })["catch"](function (error) {
         throw error;
     });
@@ -245,7 +262,7 @@ function update_kb(kb_id) {
  */
 // <publishkb>
 function publish_kb(kb_id) {
-    kb.publish(kb_id).then(function (result) {
+    return kb.publish(kb_id).then(function (result) {
         console.log("KB " + kb_id + " published.");
     })["catch"](function (error) {
         throw error;
@@ -253,20 +270,49 @@ function publish_kb(kb_id) {
 }
 // </publishkb>
 
-// 
+// <querykb>
+function query_kb(runtime_endpoint_key, kb_id) {
+	var runtime_creds = new msRest.ApiKeyCredentials({ inHeader: { 'Authorization': 'EndpointKey ' + runtime_endpoint_key } });
+	var runtime_client = new qnamaker_runtime.QnAMakerRuntimeClient(runtime_creds, runtime_endpoint);
+	var runtime = new qnamaker_runtime.Runtime(runtime_client);
+	var payload = { 'question' : 'How do I manage my knowledgebase?' };
+	return runtime.generateAnswer(kb_id, payload).then(function (result) {
+		var answers = result.answers;
+		console.log("Results:");
+        for (var _i = 0; _i < answers.length; _i++) {
+            var answer = answers[_i];
+			console.log("Answer: " + answer.answer);
+			console.log("Score: " + answer.score);
+			console.log();
+		}
+	})["catch"](function (error) {
+        throw error;
+    });
+}
+// </querykb>
 
 async function quickstart() {
     console.log("Creating KB...");
     var result = await create_kb();
     var kb_id = result.resourceLocation.replace('/knowledgebases/', '') ;
+	console.log("Created KB with ID " + kb_id);
     console.log();
 
     console.log("Updating KB...");
-    update_kb(kb_id);
+    await update_kb(kb_id);
     console.log();
 
     console.log("Publishing KB...");
-    publish_kb(kb_id);
+    await publish_kb(kb_id);
+    console.log();
+
+    console.log("Querying KB...");
+	var runtime_endpoint_key = await get_runtime_endpoint_key(client);
+    await query_kb(runtime_endpoint_key, kb_id);
+    console.log();
+
+    console.log("Deleting KB...");
+    await delete_kb(kb_id);
     console.log();
 }
 
