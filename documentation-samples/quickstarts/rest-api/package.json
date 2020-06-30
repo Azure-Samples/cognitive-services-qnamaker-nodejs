@@ -1,0 +1,16 @@
+{
+  "name": "qnamaker-quickstart-rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "rest-api.js",
+  "scripts": {
+    "start": "node rest-api.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.0",
+    "requestretry": "^4.0.0"
+  }
+}

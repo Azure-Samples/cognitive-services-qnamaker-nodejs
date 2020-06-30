@@ -1,0 +1,17 @@
+{
+  "name": "qnamaker-quickstart-get-answer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "get-answer.js",
+  "scripts": {
+    "start": "node get-answer.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "import": "0.0.6",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
+}
