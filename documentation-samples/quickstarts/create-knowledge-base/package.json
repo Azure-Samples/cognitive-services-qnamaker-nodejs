@@ -1,0 +1,12 @@
+{
+  "name": "qnamaker-quickstart-create-knowledge-base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "create-new-knowledge-base.js",
+  "scripts": {
+    "start":"node create-new-knowledge-base.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
